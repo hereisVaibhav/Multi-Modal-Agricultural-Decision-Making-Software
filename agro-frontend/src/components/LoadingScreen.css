@@ -1,0 +1,65 @@
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  height: 100%;
+  min-height: 400px;
+}
+
+.loader {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 2rem;
+}
+
+.leaf {
+  position: absolute;
+  font-size: 2rem;
+  top: 50%;
+  left: 50%;
+  transform-origin: center bottom;
+  animation: spin 2s infinite ease-in-out;
+}
+
+.leaf-1 {
+  animation-delay: 0s;
+}
+
+.leaf-2 {
+  animation-delay: 0.6s;
+}
+
+.leaf-3 {
+  animation-delay: 1.2s;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(0.5); opacity: 0; }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(0.5); opacity: 0; }
+}
+
+.loading-screen h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  background: linear-gradient(90deg, var(--text-primary), var(--accent-primary), var(--text-primary));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShine 2s linear infinite;
+}
+
+@keyframes gradientShine {
+  to { background-position: 200% center; }
+}
+
+.loading-screen p {
+  color: var(--text-secondary);
+  max-width: 300px;
+  line-height: 1.5;
+}

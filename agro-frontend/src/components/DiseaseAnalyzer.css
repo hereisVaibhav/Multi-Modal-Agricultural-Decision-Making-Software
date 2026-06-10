@@ -1,0 +1,110 @@
+.disease-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.severity-Mild {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.severity-Moderate {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.severity-Severe, .severity-Critical {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.diagnosis-main {
+  padding: 2rem;
+  text-align: center;
+}
+
+.diagnosis-main h3 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.diagnosis-main .cause {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.treatment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.treatment-card {
+  padding: 1.5rem;
+}
+
+.treatment-card h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.treatment-card.organic h4 {
+  color: #34d399;
+}
+
+.treatment-card.chemical h4 {
+  color: #60a5fa;
+}
+
+.treatment-card ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.treatment-card li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.treatment-card.organic li::before {
+  content: "🌿";
+  position: absolute;
+  left: 0;
+  font-size: 0.8rem;
+}
+
+.treatment-card.chemical li::before {
+  content: "🧪";
+  position: absolute;
+  left: 0;
+  font-size: 0.8rem;
+}
+
+.immediate-action {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 4px solid #ef4444;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.immediate-action h4 {
+  color: #f87171;
+  margin-bottom: 0.5rem;
+}
