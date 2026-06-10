@@ -141,10 +141,4 @@ This double-check pipeline ensures that the generative AI recommendations stay c
 
 ---
 
-## 📄 Research Citation & Context
-If you are using this code or reference calculations in your academic work, please cite the corresponding paper:
 
-*   **Journal:** International Journal of Scientific Research in Engineering and Management (IJSREM)
-*   **Author:** Vaibhav Shingade
-*   **UGC Approved status:** Yes
-*   **Core Scope:** Soil analysis, temperature-bounded watering adaptation, Generative AI integration, and multi-modal disease diagnostics.
