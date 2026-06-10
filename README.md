@@ -2,8 +2,6 @@
 
 🌱 **An AI-powered agricultural growth enhancer and plant disease diagnostic system.** 
 
-This project is the official implementation accompanying the research paper published in the **International Journal of Scientific Research in Engineering and Management (IJSREM)** (UGC Approved, Impact Factor: 8.0+).
-
 The application uses a hybrid approach: **deterministic baseline calculations** (soil/temperature math) combined with **state-of-the-art Generative AI** (Google's Gemma & Gemini model family) to analyze soil types, environmental temperature, and plant health to generate real-time growth optimization strategies and pathologist-level disease treatments.
 
 ---
