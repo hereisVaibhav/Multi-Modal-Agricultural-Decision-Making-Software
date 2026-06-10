@@ -1,6 +1,6 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const genAI = new GoogleGenerativeAI('AIzaSyCsZW6dgtaRkIssDjWUpQR0bdAZDRzokOc');
+const genAI = new GoogleGenerativeAI('paste your key');
 
 async function test() {
   try {
