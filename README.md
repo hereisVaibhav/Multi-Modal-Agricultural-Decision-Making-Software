@@ -75,6 +75,7 @@ The backend relies on the Google Gemini API to run its reasoning models.
     PORT=3001
     GEMINI_API_KEY=your_actual_api_key_here
     ```
+3. Alse add you API key in agro-backend/test.js
 
 > [!WARNING]
 > Never commit your `.env` file to public version control. It has already been excluded globally via the root `.gitignore` file.
