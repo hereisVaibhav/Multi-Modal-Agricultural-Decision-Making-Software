@@ -1,4 +1,4 @@
-# Multi-Modal Agricultural Decision Making & Growth Optimization Software
+# Multi-Modal Agricultural Decision Making & Growth Optimization Software By: Vaibhav Shingade
 
 🌱 **An AI-powered agricultural growth enhancer and plant disease diagnostic system.** 
 
