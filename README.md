@@ -115,20 +115,32 @@ python Main.py
 ## 🤖 API Model Selection & Future Upgrades
 
 ### Model Configuration
-Currently, the backend is configured to use Google's highly efficient **`gemma-3-27b-it`** model for structured reasoning:
+Currently, the backend is configured to use Google's **`gemma-4-26b-a4b-it`** model for structured reasoning:
 ```javascript
-const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+const model = genAI.getGenerativeModel({ 
+  model: 'gemma-4-26b-a4b-it',
+  generationConfig: { responseMimeType: 'application/json' }
+});
 ```
 
-### Upgrading the Model with Time
-As Google updates its model lines (e.g., to future iterations of Gemma or Gemini 1.5 Pro / Flash), you can modify the model string inside [agro-backend/index.js](file:///c:/Users/Vaibhav/OneDrive/Desktop/Agro/agro-backend/index.js).
+### Gemma 4 and Native "Thinking" Mode
+Gemma 4 models (such as `gemma-4-26b-a4b-it` and `gemma-4-31b-it`) are advanced reasoning models that employ a native "thinking" process. When responding to prompts, the model outputs its step-by-step reasoning steps first before returning the final JSON object. 
 
-Recommended production model upgrades:
-*   **Gemini 1.5 Flash:** `gemini-1.5-flash` (Fast, highly cost-effective, ideal for general chat/diagnose)
-*   **Gemini 1.5 Pro:** `gemini-1.5-pro` (Best for high-complexity math, multi-modal image inputs, and deep reasoning)
+### Robust JSON Parsing Pipeline
+Because the thinking/reasoning blocks precede the final JSON response, standard raw JSON parsing will throw syntax errors and crash the UI. To prevent this, the backend uses a custom, robust JSON extraction utility (`extractJSON`):
+1. **Markdown Block Detection:** Checks for markdown code blocks (e.g., ` ```json ... ``` `).
+2. **Brace Scanning:** Scans for structural curly braces `{ ... }` from the outside in.
+3. **Substring Length Sorting:** Ranks all valid JSON candidate substrings by character length and returns the longest block (identifying the root JSON object containing all details).
 
-### Schema Control (Structured Output)
-To ensure the backend never returns raw text that could crash the UI, all API requests include a structured system prompt declaring a strict JSON schema. If updating the model, ensure that the target model supports JSON mode or structured outputs.
+This pipeline guarantees that the frontend receives clean, valid structured JSON for rendering, keeping the system extremely resilient against model output formatting variances.
+
+### Upgrading the Model
+To change the active model or upgrade to future releases, modify the model configuration parameters in [agro-backend/index.js](file:///c:/Users/Vaibhav/OneDrive/Desktop/Agro/agro-backend/index.js).
+
+Supported alternative models:
+*   **Gemma 4 (Large):** `gemma-4-31b-it`
+*   **Gemini 1.5/2.0 Flash:** `gemini-1.5-flash` or `gemini-2.0-flash`
+*   **Gemini 1.5 Pro:** `gemini-1.5-pro` (for high-complexity, multi-modal reasoning)
 
 ---
 

@@ -16,11 +16,11 @@ const ResultsDashboard = ({ data }) => {
     <div className="results-dashboard animate-fade-in">
       <div className="dashboard-header glass-panel">
         <div className="header-info">
-          <h2>{data.plant}</h2>
-          <span className="growth-stage">{data.growthStage}</span>
+          <h2>{data.plant || 'Plant Care Result'}</h2>
+          <span className="growth-stage">{data.growthStage || 'N/A'}</span>
         </div>
         <div className={`status-badge ${getStatusColor(data.status)}`}>
-          {data.status}: {data.statusMessage}
+          {data.status || 'Optimal'}: {data.statusMessage || 'No status message available'}
         </div>
       </div>
 
@@ -29,9 +29,9 @@ const ResultsDashboard = ({ data }) => {
           <div className="card-icon">💧</div>
           <h3>Water Requirement</h3>
           <div className="metric-value">
-            {data.waterRequirement.value} <span>{data.waterRequirement.unit}</span>
+            {data.waterRequirement?.value ?? 'N/A'} <span>{data.waterRequirement?.unit ?? 'L/day'}</span>
           </div>
-          <p className="metric-note">{data.waterRequirement.adjustment}</p>
+          <p className="metric-note">{data.waterRequirement?.adjustment || 'No specific adjustment'}</p>
         </div>
 
         <div className="metric-card glass-panel env-card">
@@ -40,15 +40,21 @@ const ResultsDashboard = ({ data }) => {
           <div className="env-stats">
             <div className="stat">
               <span className="label">Optimal Temp</span>
-              <span className="value">{data.temperature.optimalMin} - {data.temperature.optimalMax}{data.temperature.unit}</span>
+              <span className="value">
+                {data.temperature?.optimalMin ?? 'N/A'} - {data.temperature?.optimalMax ?? 'N/A'}{data.temperature?.unit ?? '°C'}
+              </span>
             </div>
             <div className="stat">
               <span className="label">Optimal Humid</span>
-              <span className="value">{data.humidity.optimalMin} - {data.humidity.optimalMax}{data.humidity.unit}</span>
+              <span className="value">
+                {data.humidity?.optimalMin ?? 'N/A'} - {data.humidity?.optimalMax ?? 'N/A'}{data.humidity?.unit ?? '%'}
+              </span>
             </div>
             <div className="stat">
               <span className="label">Target pH</span>
-              <span className="value">{data.pH.min} - {data.pH.max}</span>
+              <span className="value">
+                {data.pH?.min ?? 'N/A'} - {data.pH?.max ?? 'N/A'}
+              </span>
             </div>
           </div>
         </div>
@@ -59,19 +65,19 @@ const ResultsDashboard = ({ data }) => {
           <div className="npk-stats">
             <div className="npk-item">
               <span className="element">N</span>
-              <span className="value">{data.nutrition.nitrogen.value}</span>
+              <span className="value">{data.nutrition?.nitrogen?.value ?? 'N/A'}</span>
             </div>
             <div className="npk-item">
               <span className="element">P</span>
-              <span className="value">{data.nutrition.phosphorus.value}</span>
+              <span className="value">{data.nutrition?.phosphorus?.value ?? 'N/A'}</span>
             </div>
             <div className="npk-item">
               <span className="element">K</span>
-              <span className="value">{data.nutrition.potassium.value}</span>
+              <span className="value">{data.nutrition?.potassium?.value ?? 'N/A'}</span>
             </div>
             <div className="npk-item">
               <span className="element">Ca</span>
-              <span className="value">{data.nutrition.calcium.value}</span>
+              <span className="value">{data.nutrition?.calcium?.value ?? 'N/A'}</span>
             </div>
           </div>
           <p className="metric-note text-center">Measured in g/day</p>
@@ -94,7 +100,7 @@ const ResultsDashboard = ({ data }) => {
           <div className="advice-block tips">
             <h3>💡 AI Care Tips</h3>
             <ul>
-              {data.tips.map((tip, idx) => (
+              {(data.tips || []).map((tip, idx) => (
                 <li key={idx}>{tip}</li>
               ))}
             </ul>

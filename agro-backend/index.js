@@ -11,6 +11,47 @@ app.use(express.json());
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+function extractJSON(text) {
+  const codeBlockRegex = /```json\s*([\s\S]*?)\s*```/i;
+  const match = text.match(codeBlockRegex);
+  if (match) {
+    try {
+      return JSON.parse(match[1].trim());
+    } catch (e) {}
+  }
+
+  const genericBlockRegex = /```\s*([\s\S]*?)\s*```/;
+  const genericMatch = text.match(genericBlockRegex);
+  if (genericMatch) {
+    try {
+      return JSON.parse(genericMatch[1].trim());
+    } catch (e) {}
+  }
+
+  const candidates = [];
+  let openIndex = text.indexOf('{');
+  while (openIndex !== -1) {
+    let closeIndex = text.lastIndexOf('}');
+    while (closeIndex > openIndex) {
+      const candidate = text.slice(openIndex, closeIndex + 1);
+      try {
+        const parsed = JSON.parse(candidate);
+        candidates.push({ parsed, length: candidate.length });
+        break;
+      } catch (e) {}
+      closeIndex = text.lastIndexOf('}', closeIndex - 1);
+    }
+    openIndex = text.indexOf('{', openIndex + 1);
+  }
+
+  if (candidates.length > 0) {
+    candidates.sort((a, b) => b.length - a.length);
+    return candidates[0].parsed;
+  }
+
+  return JSON.parse(text.trim());
+}
+
 const PREDICT_SYSTEM_PROMPT = `You are an expert agricultural AI assistant. Respond with ONLY a valid JSON object.
 Schema:
 {
@@ -61,12 +102,15 @@ app.post('/api/predict', async (req, res) => {
   if (!plant || !temperature) return res.status(400).json({ error: 'Missing required fields.' });
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemma-4-26b-a4b-it',
+      generationConfig: { responseMimeType: 'application/json' }
+    });
     const userPrompt = `${PREDICT_SYSTEM_PROMPT}\n\nPlant: ${plant}\nTemp: ${temperature}°C\nHumidity: ${humidity || 60}%\nSoil: ${soilType || 'Loam'}\nPredict optimal care.`;
     
     const result = await model.generateContent(userPrompt);
-    const cleaned = result.response.text().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim();
-    res.json(JSON.parse(cleaned));
+    const parsed = extractJSON(result.response.text());
+    res.json(parsed);
   } catch (err) {
     console.error('Gemini Error:', err);
     res.status(500).json({ error: 'Failed to get prediction.' });
@@ -78,12 +122,15 @@ app.post('/api/yield', async (req, res) => {
   if (!plant || !farmSizeAcres) return res.status(400).json({ error: 'Missing required fields.' });
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemma-4-26b-a4b-it',
+      generationConfig: { responseMimeType: 'application/json' }
+    });
     const userPrompt = `${YIELD_SYSTEM_PROMPT}\n\nPlant: ${plant}\nFarm Size: ${farmSizeAcres} Acres\nCurrent Temp: ${temperature}°C\nPredict yield, timeline, and financials based on typical agricultural data.`;
     
     const result = await model.generateContent(userPrompt);
-    const cleaned = result.response.text().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim();
-    res.json(JSON.parse(cleaned));
+    const parsed = extractJSON(result.response.text());
+    res.json(parsed);
   } catch (err) {
     console.error('Gemini Error:', err);
     res.status(500).json({ error: 'Failed to predict yield.' });
@@ -95,12 +142,15 @@ app.post('/api/diagnose', async (req, res) => {
   if (!plant || !symptoms) return res.status(400).json({ error: 'Missing required fields.' });
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemma-3-27b-it' });
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemma-4-26b-a4b-it',
+      generationConfig: { responseMimeType: 'application/json' }
+    });
     const userPrompt = `${DIAGNOSE_SYSTEM_PROMPT}\n\nPlant: ${plant}\nSymptoms: ${symptoms}\nAnalyze the symptoms and provide a detailed diagnosis and treatment plan.`;
     
     const result = await model.generateContent(userPrompt);
-    const cleaned = result.response.text().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim();
-    res.json(JSON.parse(cleaned));
+    const parsed = extractJSON(result.response.text());
+    res.json(parsed);
   } catch (err) {
     console.error('Gemini Error:', err);
     res.status(500).json({ error: 'Failed to diagnose disease.' });

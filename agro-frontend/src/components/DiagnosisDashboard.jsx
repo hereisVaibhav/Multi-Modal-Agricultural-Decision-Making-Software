@@ -5,20 +5,20 @@ const DiagnosisDashboard = ({ data }) => {
     <div className="disease-dashboard animate-fade-in">
       <div className="dashboard-header glass-panel">
         <div className="header-info">
-          <h2>{data.plant} Analysis</h2>
-          <span className="growth-stage">Confidence: {data.confidenceScore}</span>
+          <h2>{data.plant || 'Plant'} Analysis</h2>
+          <span className="growth-stage">Confidence: {data.confidenceScore || 'N/A'}</span>
         </div>
-        <div className={`status-badge severity-${data.severity}`}>
-          Severity: {data.severity}
+        <div className={`status-badge severity-${data.severity || 'Mild'}`}>
+          Severity: {data.severity || 'N/A'}
         </div>
       </div>
 
       <div className="diagnosis-main glass-panel">
-        <h3>{data.diseaseName}</h3>
-        <p className="cause">{data.cause}</p>
+        <h3>{data.diseaseName || 'Healthy / Unknown'}</h3>
+        <p className="cause">{data.cause || 'No disease cause specified.'}</p>
       </div>
 
-      {data.treatment.immediateAction && (
+      {data.treatment?.immediateAction && (
         <div className="immediate-action">
           <h4>🚨 Immediate Action Required</h4>
           <p>{data.treatment.immediateAction}</p>
@@ -29,7 +29,7 @@ const DiagnosisDashboard = ({ data }) => {
         <div className="treatment-card organic glass-panel">
           <h4>Organic Treatment</h4>
           <ul>
-            {data.treatment.organic.map((step, idx) => (
+            {(data.treatment?.organic || []).map((step, idx) => (
               <li key={idx}>{step}</li>
             ))}
           </ul>
@@ -38,7 +38,7 @@ const DiagnosisDashboard = ({ data }) => {
         <div className="treatment-card chemical glass-panel">
           <h4>Chemical Treatment</h4>
           <ul>
-            {data.treatment.chemical.map((step, idx) => (
+            {(data.treatment?.chemical || []).map((step, idx) => (
               <li key={idx}>{step}</li>
             ))}
           </ul>
@@ -49,7 +49,7 @@ const DiagnosisDashboard = ({ data }) => {
         <div className="advice-block tips" style={{width: '100%'}}>
           <h3>🛡️ Future Prevention</h3>
           <ul>
-            {data.prevention.map((tip, idx) => (
+            {(data.prevention || []).map((tip, idx) => (
               <li key={idx}>{tip}</li>
             ))}
           </ul>
