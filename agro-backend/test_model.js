@@ -1,6 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const genAI = new GoogleGenerativeAI('paste your key');
+<<<<<<< HEAD
 
 function extractJSON(text) {
   const codeBlockRegex = /```json\s*([\s\S]*?)\s*```/i;
@@ -8,7 +9,7 @@ function extractJSON(text) {
   if (match) {
     try {
       return JSON.parse(match[1].trim());
-    } catch (e) {}
+    } catch (e) { }
   }
 
   const genericBlockRegex = /```\s*([\s\S]*?)\s*```/;
@@ -16,7 +17,7 @@ function extractJSON(text) {
   if (genericMatch) {
     try {
       return JSON.parse(genericMatch[1].trim());
-    } catch (e) {}
+    } catch (e) { }
   }
 
   const candidates = [];
@@ -29,7 +30,7 @@ function extractJSON(text) {
         const parsed = JSON.parse(candidate);
         candidates.push({ parsed, length: candidate.length });
         break;
-      } catch (e) {}
+      } catch (e) { }
       closeIndex = text.lastIndexOf('}', closeIndex - 1);
     }
     openIndex = text.indexOf('{', openIndex + 1);
@@ -42,10 +43,12 @@ function extractJSON(text) {
 
   return JSON.parse(text.trim());
 }
+=======
+>>>>>>> ea56f58082409ae2868da6826b35c7ecfd449f91
 
 async function test() {
   try {
-    const model = genAI.getGenerativeModel({ 
+    const model = genAI.getGenerativeModel({
       model: 'gemma-4-26b-a4b-it',
       generationConfig: {
         responseMimeType: 'application/json'

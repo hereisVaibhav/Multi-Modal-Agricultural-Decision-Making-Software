@@ -1,8 +1,6 @@
-# Multi-Modal Agricultural Decision Making & Growth Optimization Software
+# Multi-Modal Agricultural Decision Making & Growth Optimization Software By: Vaibhav Shingade
 
 🌱 **An AI-powered agricultural growth enhancer and plant disease diagnostic system.** 
-
-This project is the official implementation accompanying the research paper published in the **International Journal of Scientific Research in Engineering and Management (IJSREM)** (UGC Approved, Impact Factor: 8.0+).
 
 The application uses a hybrid approach: **deterministic baseline calculations** (soil/temperature math) combined with **state-of-the-art Generative AI** (Google's Gemma & Gemini model family) to analyze soil types, environmental temperature, and plant health to generate real-time growth optimization strategies and pathologist-level disease treatments.
 
@@ -77,6 +75,7 @@ The backend relies on the Google Gemini API to run its reasoning models.
     PORT=3001
     GEMINI_API_KEY=your_actual_api_key_here
     ```
+3. Alse add you API key in agro-backend/test.js
 
 > [!WARNING]
 > Never commit your `.env` file to public version control. It has already been excluded globally via the root `.gitignore` file.
@@ -153,10 +152,4 @@ This double-check pipeline ensures that the generative AI recommendations stay c
 
 ---
 
-## 📄 Research Citation & Context
-If you are using this code or reference calculations in your academic work, please cite the corresponding paper:
 
-*   **Journal:** International Journal of Scientific Research in Engineering and Management (IJSREM)
-*   **Author:** Vaibhav Shingade
-*   **UGC Approved status:** Yes
-*   **Core Scope:** Soil analysis, temperature-bounded watering adaptation, Generative AI integration, and multi-modal disease diagnostics.
